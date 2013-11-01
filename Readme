@@ -1,0 +1,12 @@
+This is a simple checkers game. Work is still in progress.
+
+To build the application simply run 'make' and that will generate an executable
+file called checkers.
+
+The board game consists of an 8x8 grid with X's representing the computer and
+O's representing the human player. To move one of your pieces you must type
+the x-y coordinate of the piece you wish to move followed by the x-y 
+cooridinate of where to move. These coordinates should be separated by spaces
+or entered one value at a time. For example 3 6 2 5 would be a valid choice to
+move the piece at 3,6 to the location 2,5. The x-y coordinate begins at the 
+upper left-hand side at position 1,1.
