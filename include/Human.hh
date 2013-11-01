@@ -1,27 +1,24 @@
 #ifndef HUMAN
 #define HUMAN
 
-#include <stdint.h>
 #include "Player.hh"
-
-#include "CheckersBoard.hh"
 
 namespace checkers {
 
 class Human : public Player
 {
 public:
-    Human( CheckersBoard &board );
+    Human( CheckersBoard *board );
     ~Human();
 
     void move(
-        int currentX, 
-        int currentY, 
-        int nextX, 
-        int nextY);
+        uint32_t currentX, 
+        uint32_t currentY, 
+        uint32_t nextX, 
+        uint32_t nextY);
 
 private:
-    CheckersBoard board_;
+    CheckersBoard *board_;
 };
 
 } //checkers namespace

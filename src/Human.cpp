@@ -3,34 +3,44 @@
 
 namespace checkers {
 
-Human::Human( CheckersBoard &board ) :
-    board_(board)
-{}
+Human::Human( CheckersBoard *board ) 
+{
+    board_ = board;
+}
 
 Human::~Human()
 {}
 
 void Human::move( 
-    int currentX, 
-    int currentY, 
-    int nextX, 
-    int nextY)
+    uint32_t currentX, 
+    uint32_t currentY, 
+    uint32_t nextX, 
+    uint32_t nextY)
 {
-std::cout << currentX << std::endl;
-std::cout << currentY << std::endl;
-std::cout << nextX << std::endl;
-std::cout << nextY << std::endl;
-    if( currentX - nextX != 1 )
+    if( board_->hasPiece(currentX, currentY, 79) )
     {
-        throw MoveException("Invalid x coordinate.\n");
+        if( !( nextX == (currentX + 1) ||
+               nextX == (currentX -1) ) )
+        {
+            throw MoveException("Invalid x coordinate.\n");
+        }
+        if( currentY - nextY != 1 )
+        {
+            throw MoveException("Invalid y coordinate.\n");
+        }
+        if( board_->hasPiece(nextX, nextY, 79) )
+        {
+            throw MoveException("Invalid move location. Contains human "
+            "player's piece.\n");
+        }
+        board_->setPositions(nextX, nextY, 79);
+        board_->setPositions(currentX, currentY, 46);
     }
-    if( !( nextY == (currentY + 1) ||
-           nextY == (currentY -1) ) )
+    else
     {
-        throw MoveException("Invalid y coordinate.\n");
+        throw MoveException("Invalid move choice. Position does not contain"
+            " your piece.\n");
     }
-    
-    board_.setPositions(nextX, nextY, 79);
-    board_.setPositions(currentX, currentY, 46);
 }
+
 }

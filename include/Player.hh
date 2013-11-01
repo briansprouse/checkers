@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string>
+#include "CheckersBoard.hh"
 
 namespace checkers {
 
@@ -12,12 +13,6 @@ public:
     Player(); 
 
     virtual ~Player();
-
-    virtual void move(
-        int currentX, 
-        int currentY, 
-        int nextX, 
-        int nextY) = 0;
 
     bool subtractPiece()
     {

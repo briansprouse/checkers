@@ -6,6 +6,12 @@ namespace checkers
 
 CheckersBoard::CheckersBoard() 
 {
+    /*
+     * In ASCII
+     * 46 == '.'
+     * 88 == 'X'
+     * 79 == 'O'
+     */
     positions_ = { 
     {1,  46}, {2,  88}, {3,  46}, {4,  88}, {5,  46}, {6,  88}, {7,  46}, {8,  88},
     {9,  88}, {10, 46}, {11, 88}, {12, 46}, {13, 88}, {14, 46}, {15, 88}, {16, 46},
@@ -21,9 +27,13 @@ CheckersBoard::CheckersBoard()
 
 void CheckersBoard::displayRules()
 {
-    std::cout << "To move a checker piece, type the x-y coordinate\n"
+    std::cout << "\n\nTo move a checker piece, type the x-y coordinate\n"
     "of the piece you want to move and the x-y coordinate of where\n"
-    "you want to move.\n\n\n\n\n";
+    "you want to move separated by spaces.\n\n";
+    std::cout << "The top left of the board is 1 1. The top right of\n"
+    "the board is 8 1. The bottom left is 1 8. The bottom\n"
+    "right is 64 64.\n\n";
+    std::cout << "The player is O's and the computer is X's.\n\n\n\n";
 
 }
 
@@ -50,12 +60,46 @@ bool CheckersBoard::subtractPiece( char piece )
     }
 }
 
+//used by human player
+bool CheckersBoard::hasPiece( uint32_t x, uint32_t y, char piece )
+{
+    uint32_t position = getPosition_( x, y );
+    return hasPiece_(position, piece);
+}
+
+//used by computer player
+bool CheckersBoard::hasPiece( uint32_t position, char piece )
+{
+    return hasPiece_(position, piece);
+}
+
 void CheckersBoard::setPositions( uint32_t x, uint32_t y, char piece )
 {
-    uint32_t position = x + ( 8 * ( y - 1 ) );
+    uint32_t position = getPosition_( x, y );
     positions_[position] = piece;
+}
 
-    std::cout << "Piece: " << piece << " position: " << position << std::endl;
+void CheckersBoard::setPositions( uint32_t current, uint32_t next )
+{
+    positions_[current] = 46;
+    positions_[next] = 88;
+}
+
+uint32_t CheckersBoard::getPosition_( uint32_t x, uint32_t y )
+{
+    return ( x + ( 8 * ( y - 1 ) ) );
+}
+
+bool CheckersBoard::hasPiece_( uint32_t position, char piece )
+{
+    if( positions_.find(position) != positions_.end() )
+    {
+        return ( positions_[position] == piece ? true : false );
+    }
+    else
+    {
+        return false;
+    }
 }
 
 } //checkers namespace
